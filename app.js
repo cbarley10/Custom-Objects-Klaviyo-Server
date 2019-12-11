@@ -1,17 +1,23 @@
 // PACKAGES
 require("dotenv").config();
-const { getAllObjects, getSingleObject } = require("./utils/apis");
+const crypto = require("crypto");
+const {
+  getAllObjects,
+  getSingleObject,
+  updateSingleObject,
+  deleteSingleObject,
+  checkEmail,
+  createContact,
+  createNewObject
+} = require("./utils/apis");
 const bodyParser = require("body-parser");
 const express = require("express");
-const axios = require("axios");
 const cors = require("cors");
 const app = express();
 
 // OTHER VARS
 const PORT = process.env.PORT;
-const KEY = process.env.KEY;
-const root_url = `${process.env.root_url}?${KEY}`;
-const testing_url = process.env.TESTING_URL;
+const root_url = process.env.ROOT_URL;
 
 const config = {
   headers: { "Content-Type": "application/json" }
@@ -33,29 +39,117 @@ app.get("/", (req, res) => {
 
 // GET all custom obj records
 app.get("/custom-objects", (req, res) => {
-  getAllObjects(testing_url, config).then(response => {
-    res.send(response);
+  getAllObjects(root_url, config).then(response => {
+    const { results } = response;
+    const newResults = results.map(item => {
+      let newProductIds = item.product_ids_and_quantities.split(",");
+      return {
+        $id: item.$id,
+        cart_expiration: item.cart_expiration,
+        cart_id: item.cart_id,
+        cart_url: item.cart_url,
+        cart_value: item.cart_value,
+        $email: item.$email,
+        klaviyo_created: item.klaviyo_created,
+        klaviyo_customer_id: item.klaviyo_customer_id,
+        klaviyo_internal_id: item.klaviyo_internal_id,
+        klaviyo_updated: item.klaviyo_updated,
+        product_ids_and_quantities: newProductIds
+      };
+    });
+    res.send(newResults);
   });
 });
 
 // GET - gets a single custom obj record
 app.get("/custom-objects/:id", (req, res) => {
   const { id } = req.params;
-  getSingleObject(testing_url, id, config).then(response => {
-    res.send(response);
+  getSingleObject(root_url, id, config).then(response => {
+    let newProductIds = response.product_ids_and_quantities.split(",");
+    const newResults = {
+      $id: response.$id,
+      cart_expiration: response.cart_expiration,
+      cart_id: response.cart_id,
+      cart_url: response.cart_url,
+      cart_value: response.cart_value,
+      $email: response.$email,
+      klaviyo_created: response.klaviyo_created,
+      klaviyo_customer_id: response.klaviyo_customer_id,
+      klaviyo_internal_id: response.klaviyo_internal_id,
+      klaviyo_updated: response.klaviyo_updated,
+      product_ids_and_quantities: newProductIds
+    };
+    res.send(newResults);
   });
 });
 
 // PATCH - updates a single custom obj record
 app.patch("/custom-objects/:id", (req, res) => {
-  const { update_fields } = req.body;
-  res.send(update_fields);
+  const { id } = req.params;
+  const payload = JSON.stringify(req.body);
+
+  updateSingleObject(root_url, id, payload, config).then(response => {
+    res.send(response);
+  });
 });
 
 // POST - creates a net new custom obj record
-app.post("/custom-objects", (req, res) => {});
+app.post("/custom-objects", (req, res) => {
+  const {
+    $email,
+    $id,
+    cart_url,
+    cart_expiration,
+    product_ids_and_quantities,
+    cart_value
+  } = req.body;
+
+  const cartID = crypto.randomBytes(3).toString("hex");
+  const newObject = JSON.stringify({
+    records: [
+      {
+        $id,
+        $email,
+        cart_url,
+        cart_expiration,
+        cart_value,
+        product_ids_and_quantities,
+        cart_id: cartID
+      }
+    ]
+  });
+
+  checkEmail("https://a.klaviyo.com/api/v2/people/search", $email, config).then(
+    result => {
+      const { status } = result;
+      if (status === 200) {
+        createNewObject(root_url, newObject, config).then(_response => {
+          res.send(_response);
+        });
+      } else {
+        const token = process.env.PUBLIC_TOKEN;
+        createContact("https://a.klaviyo.com/api/identify", token, $email).then(
+          response => {
+            const { data, status } = response;
+            if (status === 200 && data === 1) {
+              createNewObject(root_url, newObject, config).then(response_ => {
+                res.send(response_);
+              });
+            }
+          }
+        );
+      }
+    }
+  );
+});
 
 // DELETE - deletes a single custom obj record
-app.put("/custom-objects", (req, res) => {});
+app.delete("/custom-objects/:id", (req, res) => {
+  const { id } = req.params;
+  deleteSingleObject(root_url, id, config).then(response => {
+    console.log(root_url);
+    res.send(response);
+  });
+});
 
 app.listen(PORT, () => console.log(`server started on port: ${PORT}`));
