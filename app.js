@@ -1,6 +1,7 @@
 // PACKAGES
 require("dotenv").config();
 const crypto = require("crypto");
+const path = require("path");
 const {
   getAllObjects,
   getSingleObject,
