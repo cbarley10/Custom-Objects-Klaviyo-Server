@@ -57,6 +57,7 @@ app.get("/custom-objects", async (req, res) => {
       product_ids_and_quantities: newProductIds
     };
   });
+
   res.send(newResults);
 });
 
