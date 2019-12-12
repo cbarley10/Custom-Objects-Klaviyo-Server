@@ -38,59 +38,57 @@ app.get("/", (req, res) => {
 });
 
 // GET all custom obj records
-app.get("/custom-objects", (req, res) => {
-  getAllObjects(root_url, config).then(response => {
-    const { results } = response;
-    const newResults = results.map(item => {
-      let newProductIds = item.product_ids_and_quantities.split(",");
-      return {
-        $id: item.$id,
-        cart_expiration: item.cart_expiration,
-        cart_id: item.cart_id,
-        cart_url: item.cart_url,
-        cart_value: item.cart_value,
-        $email: item.$email,
-        klaviyo_created: item.klaviyo_created,
-        klaviyo_customer_id: item.klaviyo_customer_id,
-        klaviyo_internal_id: item.klaviyo_internal_id,
-        klaviyo_updated: item.klaviyo_updated,
-        product_ids_and_quantities: newProductIds
-      };
-    });
-    res.send(newResults);
+app.get("/custom-objects", async (req, res) => {
+  const response = await getAllObjects(root_url, config);
+  const { results } = response;
+  const newResults = results.map(item => {
+    let newProductIds = item.product_ids_and_quantities.split(",");
+    return {
+      $id: item.$id,
+      cart_expiration: item.cart_expiration,
+      cart_id: item.cart_id,
+      cart_url: item.cart_url,
+      cart_value: item.cart_value,
+      $email: item.$email,
+      klaviyo_created: item.klaviyo_created,
+      klaviyo_customer_id: item.klaviyo_customer_id,
+      klaviyo_internal_id: item.klaviyo_internal_id,
+      klaviyo_updated: item.klaviyo_updated,
+      product_ids_and_quantities: newProductIds
+    };
   });
+  res.send(newResults);
 });
 
 // GET - gets a single custom obj record
-app.get("/custom-objects/:id", (req, res) => {
+app.get("/custom-objects/:id", async (req, res) => {
   const { id } = req.params;
-  getSingleObject(root_url, id, config).then(response => {
-    let newProductIds = response.product_ids_and_quantities.split(",");
-    const newResults = {
-      $id: response.$id,
-      cart_expiration: response.cart_expiration,
-      cart_id: response.cart_id,
-      cart_url: response.cart_url,
-      cart_value: response.cart_value,
-      $email: response.$email,
-      klaviyo_created: response.klaviyo_created,
-      klaviyo_customer_id: response.klaviyo_customer_id,
-      klaviyo_internal_id: response.klaviyo_internal_id,
-      klaviyo_updated: response.klaviyo_updated,
-      product_ids_and_quantities: newProductIds
-    };
-    res.send(newResults);
-  });
+
+  const response = await getSingleObject(root_url, id, config);
+  const newProductIds = response.product_ids_and_quantities.split(",");
+  const newResults = {
+    $id: response.$id,
+    cart_expiration: response.cart_expiration,
+    cart_id: response.cart_id,
+    cart_url: response.cart_url,
+    cart_value: response.cart_value,
+    $email: response.$email,
+    klaviyo_created: response.klaviyo_created,
+    klaviyo_customer_id: response.klaviyo_customer_id,
+    klaviyo_internal_id: response.klaviyo_internal_id,
+    klaviyo_updated: response.klaviyo_updated,
+    product_ids_and_quantities: newProductIds
+  };
+  res.send(newResults);
 });
 
 // PATCH - updates a single custom obj record
-app.patch("/custom-objects/:id", (req, res) => {
+app.patch("/custom-objects/:id", async (req, res) => {
   const { id } = req.params;
-  const payload = JSON.stringify(req.body);
 
-  updateSingleObject(root_url, id, payload, config).then(response => {
-    res.send(response);
-  });
+  const payload = JSON.stringify(req.body);
+  const response = await updateSingleObject(root_url, id, payload, config);
+  res.send(response);
 });
 
 // POST - creates a net new custom obj record
@@ -120,36 +118,34 @@ app.post("/custom-objects", (req, res) => {
   });
 
   checkEmail("https://a.klaviyo.com/api/v2/people/search", $email, config).then(
-    result => {
+    async result => {
       const { status } = result;
       if (status === 200) {
-        createNewObject(root_url, newObject, config).then(_response => {
-          res.send(_response);
-        });
+        const _response = await createNewObject(root_url, newObject, config);
+        res.send(_response);
       } else {
         const token = process.env.PUBLIC_TOKEN;
-        createContact("https://a.klaviyo.com/api/identify", token, $email).then(
-          response => {
-            const { data, status } = response;
-            if (status === 200 && data === 1) {
-              createNewObject(root_url, newObject, config).then(response_ => {
-                res.send(response_);
-              });
-            }
-          }
+        const response = await createContact(
+          "https://a.klaviyo.com/api/identify",
+          token,
+          $email
         );
+        const { data, status } = response;
+        if (status === 200 && data === 1) {
+          createNewObject(root_url, newObject, config).then(response_ => {
+            res.send(response_);
+          });
+        }
       }
     }
   );
 });
 
 // DELETE - deletes a single custom obj record
-app.delete("/custom-objects/:id", (req, res) => {
+app.delete("/custom-objects/:id", async (req, res) => {
   const { id } = req.params;
-  deleteSingleObject(root_url, id, config).then(response => {
-    console.log(root_url);
-    res.send(response);
-  });
+  const response = await deleteSingleObject(root_url, id, config);
+  res.send(response);
 });
 
 app.listen(PORT, () => console.log(`server started on port: ${PORT}`));

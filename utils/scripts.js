@@ -1,5 +1,8 @@
 const axios = require("axios");
-product_ids = ["123", "345", "456", "567", "678", "789"];
+const Base64 = require("js-base64").Base64;
+
+const product_ids = ["123", "345", "456", "567", "678", "789"];
+
 config = {
   headers: {
     "Content-Type": "application/json"
@@ -106,6 +109,26 @@ const data = [
     email: "connor.barley+20@klaviyo.com",
     cart_value: 100,
     product_ids_and_quantities: "456:4"
+  },
+  {
+    email: "connor.barley+21@klaviyo.com",
+    cart_value: 180,
+    product_ids_and_quantities: "123:2,789:3"
+  },
+  {
+    email: "connor.barley+22@klaviyo.com",
+    cart_value: 180,
+    product_ids_and_quantities: "345:2,789:3"
+  },
+  {
+    email: "connor.barley+23@klaviyo.com",
+    cart_value: 180,
+    product_ids_and_quantities: "456:2,789:3"
+  },
+  {
+    email: "connor.barley+24@klaviyo.com",
+    cart_value: 180,
+    product_ids_and_quantities: "123:2,789:3"
   }
 ];
 
@@ -125,16 +148,56 @@ const mapItems = async arr => {
   };
 };
 
-mapItems(data).then(res => {
-  const data = JSON.stringify(res);
-  console.log(data);
-  // axios
-  //   .post(
-  //     "https://a.klaviyo.com/api/v1/custom-objects/Cart/?api_key=pk_60b8aff225d7e8564f30705de0047262a2",
-  //     config,
-  //     data
-  //   )
-  //   .then(response => {
-  //     console.log(response);
-  //   });
-});
+// mapItems(data).then(res => {
+//   const data = JSON.stringify(res);
+//   console.log(data);
+//   axios
+//     .post(
+//       "https://a.klaviyo.com/api/v1/custom-objects/Cart/?api_key=pk_60b8aff225d7e8564f30705de0047262a2",
+//       config,
+//       data
+//     )
+//     .then(response => {
+//       console.log(response);
+//     });
+// });
+
+const sendTrackRequests = arr => {
+  let date = new Date();
+  let time = date.getTime() / 1000;
+
+  arr.forEach(item => {
+    let email = item.email;
+    let payload = JSON.stringify({
+      token: "PqBUK2",
+      event: "Edited Cart",
+      customer_properties: {
+        $email: email
+      },
+      properties: {
+        edited: true
+      },
+      time: time
+    });
+    let encodedPayload = Base64.encode(payload);
+
+    axios
+      .get(`https://a.klaviyo.com/api/track?data=${encodedPayload}`)
+      .then(res => console.log(res));
+  });
+};
+
+sendTrackRequests(data);
+
+// {% for record in custom_objects.Cart %}
+//   {% with item=record.product_ids_and_quantities|split:"," %}
+//     {% for cartItem in item %}
+//       {% with product_id=cartItem|split:":"|lookup:0 %}
+//         {% with quantity=cartItem|split:":"|lookup:1 %}
+//           Product ID: {{ product_id}}
+//           Quantity: {{ quantity}}
+//         {% endwith %}
+//       {% endwith %}
+//     {% endfor %}
+//   {% endwith %}
+// {% endfor %}

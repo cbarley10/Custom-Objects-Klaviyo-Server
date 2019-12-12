@@ -1,36 +1,28 @@
 const axios = require("axios");
 const Base64 = require("js-base64").Base64;
 
-const getAllObjects = (url, config) => {
+const getAllObjects = async (url, config) => {
   const newUrl = `${url}?api_key=${process.env.KEY}`;
-  return axios.get(newUrl, config).then(res => {
-    const { data } = res;
-    return data;
-  });
+  const response = await axios.get(newUrl, config);
+  return response.data;
 };
 
-const getSingleObject = (url, id, config) => {
+const getSingleObject = async (url, id, config) => {
   const newUrl = `${url}/${id}?api_key=${process.env.KEY}`;
-  return axios.get(newUrl, config).then(res => {
-    const { data } = res;
-    return data;
-  });
+  const response = await axios.get(newUrl, config);
+  return response.data;
 };
 
-const updateSingleObject = (url, id, payload, config) => {
+const updateSingleObject = async (url, id, payload, config) => {
   const newUrl = `${url}/${id}/?api_key=${process.env.KEY}`;
-  return axios.patch(newUrl, payload, config).then(res => {
-    const { data } = res;
-    return data;
-  });
+  const response = await axios.patch(newUrl, payload, config);
+  return response.data;
 };
 
-const deleteSingleObject = (url, id, config) => {
+const deleteSingleObject = async (url, id, config) => {
   const newUrl = `${url}/${id}/?api_key=${process.env.KEY}`;
-  return axios.delete(newUrl, config).then(res => {
-    const { data } = res;
-    return data;
-  });
+  const response = await axios.delete(newUrl, config);
+  return response.data;
 };
 
 const checkEmail = (url, email, config) => {
