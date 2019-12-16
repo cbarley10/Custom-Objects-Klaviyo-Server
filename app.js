@@ -91,6 +91,7 @@ app.patch("/custom-objects/:id", async (req, res) => {
 
   const payload = JSON.stringify(req.body);
   const response = await updateSingleObject(root_url, id, payload, config);
+  console.log(response);
   res.send(response);
 });
 

@@ -16,6 +16,7 @@ const getSingleObject = async (url, id, config) => {
 const updateSingleObject = async (url, id, payload, config) => {
   const newUrl = `${url}/${id}/?api_key=${process.env.KEY}`;
   const response = await axios.patch(newUrl, payload, config);
+  console.log(newUrl);
   return response.data;
 };
 
