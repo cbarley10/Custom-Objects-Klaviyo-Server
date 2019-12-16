@@ -24,7 +24,7 @@ KEY={ Private API Key Here}
 ROOT_URL=https://a.klaviyo.com/api/v1/custom-objects/Cart
 ```
 
-You can find your Public Token and Private API key in your Klaviyo Account settings
+You can find your Public Token and Private API key in your Klaviyo Account settings. Do not include the curly braces when you add those tokens. Example `PUBLIC_TOKEN=ABC123`
 
 3. Install packages using:
 
