@@ -14,8 +14,20 @@ npm install
 
 To run the app:
 
-1. Create a file in the root directory called `.env`.
-2. Add the following information to the file and save it:
+1. Clone the app Repo:
+
+```bash
+git clone git@github.com:cbarley10/Custom-Objects-Klaviyo-Server.git
+```
+
+2. Change into the root directory:
+
+```bash
+cd Custom-Objects-Klaviyo-Server
+```
+
+3. Create a file in the root directory called `.env`.
+4. Add the following information to the file and save it:
 
 ```
 PORT=5000
@@ -26,13 +38,13 @@ ROOT_URL=https://a.klaviyo.com/api/v1/custom-objects/Cart
 
 You can find your Public Token and Private API key in your Klaviyo Account settings. Do not include the curly braces when you add those tokens. Example `PUBLIC_TOKEN=ABC123`
 
-3. Install packages using:
+5. Install packages using:
 
 ```bash
 npm install
 ```
 
-4. Run the server using:
+6. Run the server using:
 
 ```bash
 npm run dev
