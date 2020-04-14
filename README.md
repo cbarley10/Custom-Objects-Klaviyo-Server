@@ -1,4 +1,4 @@
-# Hylete Custom Objects Server
+# Custom Objects Server
 
 This app is a server written in NodeJS to interact with Klaviyo Custom Objects for Hylete.
 
@@ -33,7 +33,7 @@ cd Custom-Objects-Klaviyo-Server
 PORT=5000
 PUBLIC_TOKEN={ Public Token Here }
 KEY={ Private API Key Here}
-ROOT_URL=https://a.klaviyo.com/api/v1/custom-objects/Cart
+ROOT_URL=https://a.klaviyo.com/api/v1/{CUSTOM OBJECTS ENDPOINT HERE}
 ```
 
 You can find your Public Token and Private API key in your Klaviyo Account settings. Do not include the curly braces when you add those tokens. Example `PUBLIC_TOKEN=ABC123`
