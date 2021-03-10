@@ -1,0 +1,62 @@
+[
+  {
+    "id": "123",
+    "title": "Verge II Short",
+    "link": "https://www.hylete.com/verge-2-flex-woven-zip-pocket-short-trellis-cool-gray",
+    "description": "Our most lightweight and breathable performance short, designed for your hottest high-intensity workouts. 4-way stretch let’s you reach your full potential, so you can add miles to your run and reps to your PR.",
+    "price": 80.0,
+    "hylete_price": 72.0,
+    "image_link": "https://www.hylete.com/media/catalog/product/cache/1/image/660x660/9df78eab33525d08d6e5fb8d27136e95/h/y/hy_verge_mn_flexwovenzippocket_mn_rightside_trcg_2.jpg",
+    "categories": ["trellis", "mens", "cool gray", "shorts", "athletic"]
+  },
+  {
+    "id": "345",
+    "title": "Icon II Quad-Blend Crew Tee",
+    "link": "https://www.hylete.com/icon-2-quad-blend-crew-black-black",
+    "description": "Built with a proprietary quad-blend fabric, the icon ll quad-blend crew is a super comfortable, athletic fit crew tee that can be worn in the gym or out on the town.",
+    "price": 55.0,
+    "hylete_price": 42.0,
+    "image_link": "https://www.hylete.com/media/catalog/product/cache/1/image/660x660/9df78eab33525d08d6e5fb8d27136e95/i/c/iconii_crew_mn_qb_front_bk_6.jpg",
+    "categories": ["t-shirt", "mens", "black", "shirt", "athletic"]
+  },
+  {
+    "id": "456",
+    "title": "Vital Hoodie",
+    "link": "https://www.hylete.com/vital-pullover-hoodie-agean",
+    "description": "Warm up or cool down with the men’s vital pullover hoodie. This high performance fabric is ideal to wear at the gym, or make it a wardrobe staple as a casual long sleeve. Easy to coordinate with any outfit, the criss-cross back panel adds style so this hoodie can be worn alone or layered with your favorite tank, tee, or jacket. The soft and form fitting hoodie gives you ultimate convenience with kangaroo pockets for a quick and easy spot to stash your keys and phone.",
+    "price": 78.0,
+    "hylete_price": 56.0,
+    "image_link": "https://www.hylete.com/media/catalog/product/cache/1/image/660x660/9df78eab33525d08d6e5fb8d27136e95/h/y/hy_m_vitalpullover_hoodie_sp19_3qtrfront_ag.jpg",
+    "categories": ["hoddie", "mens", "blue", "outside", "athletic"]
+  },
+  {
+    "id": "567",
+    "title": "Medallion Long Sleeve Baseball Crew",
+    "link": "https://www.hylete.com/medallion-long-sleeve-baseball-crew-white-black",
+    "description": "A fabric blend for the minimalist. Breezy to keep you feeling light and cool, with durability that makes this tee a hit for track and field training.",
+    "price": 40.0,
+    "hylete_price": 36.0,
+    "image_link": "https://www.hylete.com/media/catalog/product/cache/1/image/660x660/9df78eab33525d08d6e5fb8d27136e95/h/y/hy_mn_medallion_ls_baseballtee_front_fa19_blk.jpg",
+    "categories": ["white/black", "mens", "shirt", "long-sleeves"]
+  },
+  {
+    "id": "678",
+    "title": "Flexion Pant",
+    "link": "https://www.hylete.com/womens-flexion-pant-heather-slate",
+    "description": "Equally in its element in and out of the gym. The semi-slick exterior fabric provides durability, while an interior waffle texture offers superior temperature regulation and breathability. The flexion pants’ angular paneling and contrast fabric stretch zones allow for superior comfort and mobility, and the flat, wide waistband offers a smooth fit around the hips. Two front slash pockets are incorporated for quick access storage.",
+    "price": 110.0,
+    "hylete_price": 88.0,
+    "image_link": "https://www.hylete.com/media/catalog/product/cache/1/image/660x660/9df78eab33525d08d6e5fb8d27136e95/h/y/hy_wm_flexion_pant_front_3qtr_hggm_1.jpg",
+    "categories": ["pants", "womens", "yoga", "athletic"]
+  },
+  {
+    "id": "789",
+    "title": "Verge II Short",
+    "link": "https://www.hylete.com/nova-short-heather-gray",
+    "description": "Lightweight, 4-way stretch, and moderate cut in the legs for maximum range of motion - the nova short is the ultimate in comfort and style. This short is perfect for your days off, but performs equally as well in the gym or on the go. Ribbed French terry fabric provides an ultra soft texture and relaxed fit to effortlessly complement many body types. Featuring two front slash pockets, and one concealed zipper pocket placed high on the back hip, allowing you to stow your valuables without them getting in the way.",
+    "price": 58.0,
+    "hylete_price": 48.0,
+    "image_link": "https://www.hylete.com/media/catalog/product/cache/1/image/1500x/9df78eab33525d08d6e5fb8d27136e95/h/y/hy_wm_nova_short_front_hg_8.jpg",
+    "categories": ["shorts", "womens", "workout", "athletic"]
+  }
+]
